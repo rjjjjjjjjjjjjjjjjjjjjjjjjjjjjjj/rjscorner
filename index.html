@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ridhima Jain | CS × Robotics × Embedded Systems</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-cyan: #00f3ff;
+            --primary-magenta: #ff00ff;
+            --accent-neon: #39ff14;
+            --dark-bg: #0a0e27;
+            --darker-bg: #050813;
+            --card-bg: rgba(15, 23, 42, 0.8);
+            --text-primary: #e0e7ff;
+            --text-secondary: #94a3b8;
+            --grid-color: rgba(0, 243, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--darker-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Grid Background */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+        }
+
+        /* Glowing orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary-cyan);
+            top: -200px;
+            right: -100px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--primary-magenta);
+            bottom: -150px;
+            left: -100px;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(50px, 50px); }
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header/Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-left h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darker-bg);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .glitch::before {
+            animation: glitch-1 2.5s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        }
+
+        .glitch::after {
+            animation: glitch-2 2.5s infinite;
+            clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+        }
+
+        @keyframes glitch-1 {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-3px, 2px); }
+            40% { transform: translate(-3px, -2px); }
+            60% { transform: translate(3px, 2px); }
+            80% { transform: translate(3px, -2px); }
+        }
+
+        @keyframes glitch-2 {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(3px, -2px); }
+            40% { transform: translate(3px, 2px); }
+            60% { transform: translate(-3px, -2px); }
+            80% { transform: translate(-3px, 2px); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: 2px solid;
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: transparent;
+            border-color: var(--primary-cyan);
+            color: var(--primary-cyan);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-cyan);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn-primary:hover {
+            color: var(--darker-bg);
+        }
+
+        .btn-primary:hover::before {
+            left: 0;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border-color: var(--text-secondary);
+            color: var(--text-secondary);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary-magenta);
+            color: var(--primary-magenta);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        /* 3D Canvas Container */
+        #canvas-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            background: rgba(5, 8, 19, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 6rem 0;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: var(--primary-cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        /* Asymmetric Project Grid */
+        .projects-grid {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            padding: 2.5rem;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-cyan), var(--primary-magenta));
+            transition: width 0.4s ease;
+        }
+
+        .project-card:hover::before {
+            width: 100%;
+        }
+
+        .project-card:hover {
+            border-color: var(--primary-cyan);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .project-featured {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(0, 243, 255, 0.05), rgba(255, 0, 255, 0.05));
+            border: 2px solid;
+            border-image: linear-gradient(135deg, var(--primary-cyan), var(--primary-magenta)) 1;
+        }
+
+        .project-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.3rem 0.8rem;
+            background: rgba(0, 243, 255, 0.1);
+            border: 1px solid var(--primary-cyan);
+            color: var(--primary-cyan);
+            margin-bottom: 1rem;
+        }
+
+        .project-tag.current {
+            background: rgba(57, 255, 20, 0.1);
+            border-color: var(--accent-neon);
+            color: var(--accent-neon);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .project-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-tag {
+            font-size: 0.85rem;
+            padding: 0.3rem 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            border-radius: 2px;
+        }
+
+        /* Extracurriculars Section */
+        .extracurriculars {
+            padding: 4rem 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .ec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .ec-card {
+            background: var(--card-bg);
+            border-left: 3px solid var(--primary-magenta);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .ec-card:hover {
+            border-left-width: 6px;
+            padding-left: 2rem;
+            background: rgba(255, 0, 255, 0.05);
+        }
+
+        .ec-card h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-magenta);
+        }
+
+        .ec-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2rem;
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            border-color: var(--primary-cyan);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .contact-icon {
+            width: 24px;
+            height: 24px;
+            fill: var(--primary-cyan);
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(0, 243, 255, 0.2);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Media Queries */
+        @media (max-width: 968px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            #canvas-container {
+                height: 400px;
+            }
+
+            .project-featured {
+                grid-column: 1;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .hero-left h1 {
+                font-size: 2.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            #canvas-container {
+                height: 300px;
+            }
+        }
+
+        /* Loading animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .delay-3 { animation-delay: 0.3s; opacity: 0; }
+        .delay-4 { animation-delay: 0.4s; opacity: 0; }
+    </style>
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="grid-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-left">
+                    <h1 class="glitch fade-in delay-1" data-text="RIDHIMA JAIN">RIDHIMA JAIN</h1>
+                    <p class="hero-subtitle fade-in delay-2">Computer Science × Robotics × Embedded Systems</p>
+                    <div class="cta-buttons fade-in delay-3">
+                        <a href="#projects" class="btn btn-primary">View Projects</a>
+                        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                    </div>
+                </div>
+                <div class="hero-right fade-in delay-4">
+                    <div id="canvas-container">
+                        <canvas id="threejs-canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="projects" id="projects">
+            <h2 class="section-title">Featured Work</h2>
+            <p class="section-subtitle">Building intelligent systems at the intersection of hardware and software</p>
+            
+            <div class="projects-grid">
+                <!-- Featured Project -->
+                <div class="project-card project-featured" data-project="1">
+                    <span class="project-tag">Featured</span>
+                    <h3>Autonomous Exploration & Mapping Robot (V2)</h3>
+                    <p>Designed a research-grade autonomous mobile robot that performs real-time environment mapping, path planning, and adaptive obstacle avoidance using sensor fusion, embedded control, and algorithmic decision-making. This is not a toy car—it's a mini research platform.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">ROS2</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">C++</span>
+                        <span class="tech-tag">SLAM</span>
+                        <span class="tech-tag">Sensor Fusion</span>
+                        <span class="tech-tag">Path Planning</span>
+                        <span class="tech-tag">Embedded Systems</span>
+                    </div>
+                </div>
+
+                <!-- Current Project -->
+                <div class="project-card" data-project="2">
+                    <span class="project-tag current">In Progress</span>
+                    <h3>Robot That Detects Human Intent — Without Vision</h3>
+                    <p>Building a behavioral ML system that understands human intent through motion and proximity patterns alone. No camera. No face detection. The robot learns to distinguish between someone approaching versus passing by, blocking intentionally versus accidentally, and predicts future motion trajectories. This is behavioral machine learning, not vision.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Machine Learning</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Behavioral Analysis</span>
+                        <span class="tech-tag">Sensor Arrays</span>
+                        <span class="tech-tag">Pattern Recognition</span>
+                        <span class="tech-tag">Motion Prediction</span>
+                    </div>
+                </div>
+
+                <!-- Third Project -->
+                <div class="project-card" data-project="3">
+                    <span class="project-tag">Automation</span>
+                    <h3>Streaming Platform Test Automation & Telemetry System</h3>
+                    <p>Designed a Python-based automation framework to simulate user interactions and system workflows, inspired by high-traffic streaming platforms. Built logging and telemetry pipelines to capture performance metrics, error states, and system behavior during automated test runs. Visualized system performance data using Matplotlib to identify bottlenecks and reliability issues.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Automation</span>
+                        <span class="tech-tag">Telemetry</span>
+                        <span class="tech-tag">Matplotlib</span>
+                        <span class="tech-tag">Testing Frameworks</span>
+                        <span class="tech-tag">Agile Development</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Extracurriculars Section -->
+        <section class="extracurriculars" id="involvement">
+            <div class="container">
+                <h2 class="section-title">Campus Involvement</h2>
+                <p class="section-subtitle">Building communities and pushing technical boundaries</p>
+                
+                <div class="ec-grid">
+                    <div class="ec-card">
+                        <h4>Robotics Club (ROS2 Team)</h4>
+                        <p>Working with Robot Operating System 2 to develop autonomous systems and collaborative robotics projects</p>
+                    </div>
+                    <div class="ec-card">
+                        <h4>AWS Club - Warrior Bot</h4>
+                        <p>Developing cloud-integrated robotics solutions using AWS infrastructure and services</p>
+                    </div>
+                    <div class="ec-card">
+                        <h4>Computer Science Association - Founder</h4>
+                        <p>Founded and lead the CS Association, building a community for computer science students</p>
+                    </div>
+                    <div class="ec-card">
+                        <h4>Wayne Women in Tech</h4>
+                        <p>Supporting and empowering women in technology through mentorship and community events</p>
+                    </div>
+                    <div class="ec-card">
+                        <h4>Indian Student Association</h4>
+                        <p>Active member fostering cultural exchange and community engagement</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact" id="contact">
+            <h2 class="section-title">Let's Connect</h2>
+            <p class="section-subtitle">Open to internship opportunities in robotics, embedded systems, and software engineering</p>
+            
+            <div class="contact-links">
+                <a href="mailto:ridhimajain048@gmail.com" class="contact-link">
+                    <svg class="contact-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                    Email
+                </a>
+                <a href="https://www.linkedin.com/in/ridhima-jain-09b0b1349" target="_blank" class="contact-link">
+                    <svg class="contact-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                    LinkedIn
+                </a>
+                <a href="https://github.com/rjjjjjjjjjjjjjjjjjjjjjjjj" target="_blank" class="contact-link">
+                    <svg class="contact-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Ridhima Jain. Built with code, passion, and a lot of caffeine.</p>
+    </footer>
+
+    <!-- Three.js for 3D Graphics -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Three.js 3D Interactive Scene
+        const canvas = document.getElementById('threejs-canvas');
+        const container = document.getElementById('canvas-container');
+        
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        
+        renderer.setSize(container.offsetWidth, container.offsetHeight);
+        renderer.setClearColor(0x000000, 0);
+        
+        // Create geometric shapes
+        const geometry1 = new THREE.IcosahedronGeometry(1, 0);
+        const geometry2 = new THREE.OctahedronGeometry(1.2, 0);
+        const geometry3 = new THREE.TetrahedronGeometry(0.8, 0);
+        
+        const material1 = new THREE.MeshBasicMaterial({ 
+            color: 0x00f3ff, 
+            wireframe: true,
+            transparent: true,
+            opacity: 0.6
+        });
+        const material2 = new THREE.MeshBasicMaterial({ 
+            color: 0xff00ff, 
+            wireframe: true,
+            transparent: true,
+            opacity: 0.5
+        });
+        const material3 = new THREE.MeshBasicMaterial({ 
+            color: 0x39ff14, 
+            wireframe: true,
+            transparent: true,
+            opacity: 0.4
+        });
+        
+        const mesh1 = new THREE.Mesh(geometry1, material1);
+        const mesh2 = new THREE.Mesh(geometry2, material2);
+        const mesh3 = new THREE.Mesh(geometry3, material3);
+        
+        mesh1.position.set(-1, 0, 0);
+        mesh2.position.set(1, 0.5, 0);
+        mesh3.position.set(0, -0.8, 0.5);
+        
+        scene.add(mesh1);
+        scene.add(mesh2);
+        scene.add(mesh3);
+        
+        camera.position.z = 4;
+        
+        // Mouse interaction
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetX = 0;
+        let targetY = 0;
+        
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            mouseX = (e.clientX - rect.left) / rect.width * 2 - 1;
+            mouseY = -(e.clientY - rect.top) / rect.height * 2 + 1;
+        });
+        
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Smooth mouse follow
+            targetX += (mouseX - targetX) * 0.05;
+            targetY += (mouseY - targetY) * 0.05;
+            
+            // Rotate shapes
+            mesh1.rotation.x += 0.005;
+            mesh1.rotation.y += 0.005;
+            
+            mesh2.rotation.x -= 0.003;
+            mesh2.rotation.y += 0.007;
+            
+            mesh3.rotation.x += 0.004;
+            mesh3.rotation.z += 0.006;
+            
+            // Move based on mouse
+            mesh1.position.x = -1 + targetX * 0.5;
+            mesh1.position.y = targetY * 0.5;
+            
+            mesh2.position.x = 1 - targetX * 0.3;
+            mesh2.position.y = 0.5 - targetY * 0.3;
+            
+            mesh3.position.x = targetX * 0.4;
+            mesh3.position.y = -0.8 + targetY * 0.4;
+            
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            const width = container.offsetWidth;
+            const height = container.offsetHeight;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        });
+        
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+        
+        // Project card click effects
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+        
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.project-card, .ec-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
