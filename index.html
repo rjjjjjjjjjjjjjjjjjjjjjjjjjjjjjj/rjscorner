@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ridhima Jain | CS × Robotics × Embedded Systems</title>
+    <title>RJ'S CORNER | Ridhima Jain</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -32,6 +32,96 @@
             color: var(--text-primary);
             overflow-x: hidden;
             line-height: 1.6;
+            cursor: url('cursor.webp'), auto;
+        }
+
+        a, button, .project-card, .ec-card {
+            cursor: url('cursor.webp'), pointer;
+        }
+
+        /* Navigation Header */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(5, 8, 19, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-cyan);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-cyan);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .nav-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--primary-cyan);
+            transition: all 0.3s ease;
         }
 
         /* Animated Grid Background */
@@ -97,13 +187,14 @@
             padding: 2rem;
         }
 
-        /* Header/Hero Section */
+        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             position: relative;
+            padding-top: 80px;
         }
 
         .hero-content {
@@ -192,7 +283,6 @@
             text-decoration: none;
             border: 2px solid;
             border-radius: 0;
-            cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -253,6 +343,114 @@
             height: 100%;
         }
 
+        /* About Section */
+        .about {
+            padding: 6rem 0;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border: 2px solid var(--primary-cyan);
+            filter: grayscale(20%);
+            transition: all 0.3s ease;
+        }
+
+        .about-image img:hover {
+            filter: grayscale(0%);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.4);
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid var(--primary-magenta);
+            z-index: -1;
+        }
+
+        .about-text h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 2rem;
+            color: var(--primary-cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .about-text h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary-magenta);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .about-text strong {
+            color: var(--text-primary);
+        }
+
+        .focus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .focus-card {
+            background: var(--card-bg);
+            border-left: 3px solid var(--primary-cyan);
+            padding: 1.5rem;
+        }
+
+        .focus-card h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-cyan);
+        }
+
+        .focus-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .focus-card li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .focus-card li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--primary-cyan);
+        }
+
         /* Projects Section */
         .projects {
             padding: 6rem 0;
@@ -286,7 +484,6 @@
             border: 1px solid rgba(0, 243, 255, 0.2);
             padding: 2.5rem;
             position: relative;
-            cursor: pointer;
             transition: all 0.4s ease;
             backdrop-filter: blur(10px);
         }
@@ -461,9 +658,41 @@
 
         /* Media Queries */
         @media (max-width: 968px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: rgba(5, 8, 19, 0.98);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 3rem;
+                transition: left 0.3s ease;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
             .hero-content {
                 grid-template-columns: 1fr;
                 gap: 2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-image {
+                max-width: 300px;
+                margin: 0 auto;
             }
 
             #canvas-container {
@@ -515,6 +744,25 @@
     </style>
 </head>
 <body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">RJ'S CORNER</a>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#involvement">Involvement</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <!-- Background Elements -->
     <div class="grid-bg"></div>
     <div class="orb orb-1"></div>
@@ -522,13 +770,14 @@
 
     <div class="container">
         <!-- Hero Section -->
-        <section class="hero">
+        <section class="hero" id="home">
             <div class="hero-content">
                 <div class="hero-left">
                     <h1 class="glitch fade-in delay-1" data-text="RIDHIMA JAIN">RIDHIMA JAIN</h1>
-                    <p class="hero-subtitle fade-in delay-2">Computer Science × Robotics × Embedded Systems</p>
+                    <p class="hero-subtitle fade-in delay-2">Computer Science • Neuroscience • Robotics</p>
                     <div class="cta-buttons fade-in delay-3">
-                        <a href="#projects" class="btn btn-primary">View Projects</a>
+                        <a href="#about" class="btn btn-primary">About Me</a>
+                        <a href="#projects" class="btn btn-secondary">View Projects</a>
                         <a href="#contact" class="btn btn-secondary">Get In Touch</a>
                     </div>
                 </div>
@@ -540,17 +789,72 @@
             </div>
         </section>
 
+        <!-- About Section -->
+        <section class="about" id="about">
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="profile.jpeg" alt="Ridhima Jain">
+                </div>
+                <div class="about-text">
+                    <h2>Hi, I'm Ridhima.</h2>
+                    <p>I'm a 4.0 GPA student double majoring in <strong>Computer Science</strong> and <strong>Neuroscience</strong>, passionate about robotics, biotechnology, and intelligent systems that interact with the real world, driven by one question:</p>
+                    <p><strong>How can we build intelligent systems that understand, and improve human life?</strong></p>
+                    <p>I love coding, but I'm most excited when software leaves the screen and becomes something tangible. Whether that's robotics, neurotechnology, or AI-driven healthcare systems, I'm drawn to problems that sit at the boundary between computation and biology.</p>
+                    
+                    <h3>The Why</h3>
+                    <p>The brain is the most advanced computational system we know. Robotics brings intelligence into the physical world. Biotech translates science into impact.</p>
+                    <p>I'm fascinated by where these systems overlap.</p>
+                    <p>My goal is to help design technologies that don't just process data, but understand, adapt, and improve human life.</p>
+                    
+                    <h3>What I'm Focused On</h3>
+                    <div class="focus-grid">
+                        <div class="focus-card">
+                            <h4>Computer Science</h4>
+                            <ul>
+                                <li>Algorithms & systems design</li>
+                                <li>AI & machine learning</li>
+                                <li>Secure and scalable software</li>
+                            </ul>
+                        </div>
+                        <div class="focus-card">
+                            <h4>Robotics</h4>
+                            <ul>
+                                <li>Hardware–software integration</li>
+                                <li>Autonomous systems</li>
+                                <li>Embedded computing</li>
+                            </ul>
+                        </div>
+                        <div class="focus-card">
+                            <h4>Neuroscience & Biotech</h4>
+                            <ul>
+                                <li>Neural systems and cognition</li>
+                                <li>Brain-computer interface concepts</li>
+                                <li>Computational approaches to biological data</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h3>How I Work</h3>
+                    <p>I approach problems analytically, but I build with intention. I care about clean architecture, thoughtful design, and meaningful impact.</p>
+                    <p>Being immersed in both engineering and neuroscience has shaped how I think: systems-first, interdisciplinary, and always curious.</p>
+                    
+                    <h3>Outside the Classroom</h3>
+                    <p>I've led fundraising initiatives, collaborated on community projects, and taught coding and STEM to students across different age groups. Teaching has strengthened my ability to break down complex systems, and build them better.</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Projects Section -->
         <section class="projects" id="projects">
             <h2 class="section-title">Featured Work</h2>
-            <p class="section-subtitle">Building intelligent systems at the intersection of hardware and software</p>
+            <p class="section-subtitle">Research-driven projects in robotics and intelligent systems</p>
             
             <div class="projects-grid">
                 <!-- Featured Project -->
                 <div class="project-card project-featured" data-project="1">
                     <span class="project-tag">Featured</span>
                     <h3>Autonomous Exploration & Mapping Robot (V2)</h3>
-                    <p>Designed a research-grade autonomous mobile robot that performs real-time environment mapping, path planning, and adaptive obstacle avoidance using sensor fusion, embedded control, and algorithmic decision-making. This is not a toy car—it's a mini research platform.</p>
+                    <p>Designed a research-grade autonomous mobile robot that performs real-time environment mapping, path planning, and adaptive obstacle avoidance using sensor fusion, embedded control, and algorithmic decision-making.</p>
                     <div class="tech-stack">
                         <span class="tech-tag">ROS2</span>
                         <span class="tech-tag">Python</span>
@@ -566,7 +870,7 @@
                 <div class="project-card" data-project="2">
                     <span class="project-tag current">In Progress</span>
                     <h3>Robot That Detects Human Intent — Without Vision</h3>
-                    <p>Building a behavioral ML system that understands human intent through motion and proximity patterns alone. No camera. No face detection. The robot learns to distinguish between someone approaching versus passing by, blocking intentionally versus accidentally, and predicts future motion trajectories. This is behavioral machine learning, not vision.</p>
+                    <p>Building a behavioral ML system that understands human intent through motion and proximity patterns alone. No camera. No face detection. The robot learns to distinguish between someone approaching versus passing by, blocking intentionally versus accidentally, and predicts future motion trajectories. This is behavioral machine learning.</p>
                     <div class="tech-stack">
                         <span class="tech-tag">Machine Learning</span>
                         <span class="tech-tag">Python</span>
@@ -598,7 +902,7 @@
         <section class="extracurriculars" id="involvement">
             <div class="container">
                 <h2 class="section-title">Campus Involvement</h2>
-                <p class="section-subtitle">Building communities and pushing technical boundaries</p>
+                <p class="section-subtitle">Leadership and community engagement</p>
                 
                 <div class="ec-grid">
                     <div class="ec-card">
@@ -614,12 +918,12 @@
                         <p>Founded and lead the CS Association, building a community for computer science students</p>
                     </div>
                     <div class="ec-card">
-                        <h4>Wayne Women in Tech</h4>
-                        <p>Supporting and empowering women in technology through mentorship and community events</p>
+                        <h4>Wayne Women in Tech - Professional Chair</h4>
+                        <p>Organizing professional development events and empowering women in technology</p>
                     </div>
                     <div class="ec-card">
-                        <h4>Indian Student Association</h4>
-                        <p>Active member fostering cultural exchange and community engagement</p>
+                        <h4>Indian Student Association - Fundraising Chair</h4>
+                        <p>Leading fundraising initiatives and fostering cultural exchange within the community</p>
                     </div>
                 </div>
             </div>
@@ -627,8 +931,8 @@
 
         <!-- Contact Section -->
         <section class="contact" id="contact">
-            <h2 class="section-title">Let's Connect</h2>
-            <p class="section-subtitle">Open to internship opportunities in robotics, embedded systems, and software engineering</p>
+            <h2 class="section-title">Let's Build Something Meaningful</h2>
+            <p class="section-subtitle">If you're working on robotics, neurotechnology, AI in healthcare, or biotech innovation, I'd love to connect.</p>
             
             <div class="contact-links">
                 <a href="mailto:ridhimajain048@gmail.com" class="contact-link">
@@ -654,12 +958,27 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 Ridhima Jain. Built with code, passion, and a lot of caffeine.</p>
+        <p>&copy; 2026 Ridhima Jain. Designed and built from scratch.</p>
     </footer>
 
     <!-- Three.js for 3D Graphics -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
+        // Mobile Navigation Toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close nav when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
         // Three.js 3D Interactive Scene
         const canvas = document.getElementById('threejs-canvas');
         const container = document.getElementById('canvas-container');
@@ -799,7 +1118,7 @@
             });
         }, observerOptions);
         
-        document.querySelectorAll('.project-card, .ec-card').forEach(el => {
+        document.querySelectorAll('.project-card, .ec-card, .focus-card').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
