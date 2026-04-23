@@ -544,7 +544,7 @@ function ClientBrainScene({
   if (!isLg) return null;
 
   return (
-    <div style={{ position: "absolute", inset: "0 0 0 46%" }}>
+    <div style={{ position: "absolute", inset: 0 }}>
       <Canvas camera={{ position: sections[0].cameraPosition as [number, number, number], fov: 28 }} dpr={[1, 2]}>
         <color attach="background" args={["#000000"]} />
         <fog attach="fog" args={["#050816", 5.5, 10.5]} />
@@ -846,11 +846,9 @@ function SectionCopy({ section, active }: { section: BrainSection; active: boole
   return (
     <div
       style={{
-        margin: "0 auto",
         display: "flex",
         minHeight: "100vh",
         width: "100%",
-        maxWidth: "80rem",
         alignItems: "flex-start",
         padding: "6rem 1.25rem 5rem",
         opacity: active ? 1 : 0.7,
@@ -859,83 +857,52 @@ function SectionCopy({ section, active }: { section: BrainSection; active: boole
     >
       <div
         style={{
-          display: "grid",
-          width: "100%",
-          gap: "2.5rem",
+          width: "min(52rem, 54vw)",
+          display: "flex",
+          flexDirection: "column",
+          gap: "1.5rem",
         }}
-        className="section-grid"
+        className="section-content"
       >
-        {/* Left sticky copy */}
-        <div
-          className="neuro-panel"
-          style={{
-            position: "sticky",
-            top: "7rem",
-            maxHeight: "calc(100vh - 9rem)",
-            overflowY: "auto",
-            borderRadius: "1.75rem",
-            padding: "1.75rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "1.5rem",
-            zIndex: 20,
-          }}
-        >
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
-            <p className="neuro-label">{section.kicker}</p>
-            {section.id === "hero" ? (
-              <h1
-                style={{
-                  fontSize: "clamp(2.8rem, 5.5vw, 4.8rem)",
-                  fontWeight: 700,
-                  letterSpacing: "-0.02em",
-                  color: "var(--foreground)",
-                  lineHeight: 1.1,
-                  fontFamily: "'Orbitron', sans-serif",
-                }}
-              >
-                {section.title}
-              </h1>
-            ) : (
-              <h2
-                style={{
-                  fontSize: "clamp(2rem, 4vw, 3.2rem)",
-                  fontWeight: 700,
-                  letterSpacing: "-0.02em",
-                  color: "var(--foreground)",
-                  lineHeight: 1.15,
-                }}
-              >
-                {section.title}
-              </h2>
-            )}
-            <p style={{ fontSize: "1.2rem", lineHeight: 1.6, color: "oklch(0.92 0.01 240 / 0.9)" }}>{section.subtitle}</p>
-            <p style={{ fontSize: "1rem", lineHeight: 1.75, color: "var(--muted-foreground)" }}>{section.body}</p>
-          </div>
-
-          {/* Region / wire label */}
-          <div
-            className="neuro-panel neuro-wire"
-            style={{ borderRadius: "1rem", padding: "0.9rem 1.1rem", color: section.accentToken }}
-          >
-            <p style={{ fontSize: "0.875rem", fontWeight: 500, color: "var(--foreground)" }}>{section.region}</p>
-            <p style={{ marginTop: "0.2rem", fontSize: "0.8rem", color: "var(--muted-foreground)" }}>{section.wireLabel}</p>
-          </div>
-
-          {section.stats && <HeroMetrics stats={section.stats} />}
-
-          {section.id === "hero" && (
+        {/* Section title */}
+        {section.id === "hero" ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <h1
+              style={{
+                fontSize: "clamp(2.8rem, 5.5vw, 4.8rem)",
+                fontWeight: 700,
+                letterSpacing: "-0.02em",
+                color: "var(--foreground)",
+                lineHeight: 1.1,
+                fontFamily: "'Orbitron', sans-serif",
+              }}
+            >
+              {section.title}
+            </h1>
+            {section.stats && <HeroMetrics stats={section.stats} />}
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
               <a href="#projects" className="btn-neuro">Featured work</a>
               <a href="#contact" className="btn-neuro-ghost" style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
                 Connect <Mail size={16} />
               </a>
             </div>
-          )}
-        </div>
+          </div>
+        ) : (
+          <h2
+            style={{
+              fontSize: "clamp(2rem, 4vw, 3.2rem)",
+              fontWeight: 700,
+              letterSpacing: "-0.02em",
+              color: "var(--foreground)",
+              lineHeight: 1.15,
+            }}
+          >
+            {section.title}
+          </h2>
+        )}
 
-        {/* Right content */}
-        <div style={{ paddingTop: "1rem" }}>
+        {/* Section content */}
+        <div>
           {section.id === "about" && <AboutContent />}
           {section.id === "projects" && <ProjectScrollGrid />}
           {section.id === "involvement" && <InvolvementList />}
@@ -1087,6 +1054,9 @@ export function BrainPortfolio() {
       {/* Grid bg */}
       <div aria-hidden className="neuro-grid" style={{ pointerEvents: "none", position: "fixed", inset: 0, zIndex: 0, opacity: 0.4 }} />
 
+      {/* Left fade so text stays readable over brain */}
+      <div aria-hidden style={{ pointerEvents: "none", position: "fixed", inset: 0, zIndex: 15, background: "linear-gradient(to right, oklch(0.07 0.015 255 / 0.85) 0%, oklch(0.07 0.015 255 / 0.55) 40%, transparent 65%)" }} />
+
       {/* Edge fade */}
       <div aria-hidden style={{ pointerEvents: "none", position: "fixed", inset: 0, zIndex: 10 }}>
         <div style={{ position: "absolute", insetInline: 0, top: 0, height: "10rem", background: "linear-gradient(to bottom, var(--background), transparent)" }} />
@@ -1102,7 +1072,7 @@ export function BrainPortfolio() {
       </div>
 
       {/* Scrollable content */}
-      <div style={{ position: "relative", zIndex: 10 }}>
+      <div style={{ position: "relative", zIndex: 20 }}>
         {sections.map((s) => (
           <section key={s.id} id={s.id}>
             <SectionCopy section={s} active={s.id === activeId} />
@@ -1112,19 +1082,12 @@ export function BrainPortfolio() {
 
       {/* Responsive grid styles */}
       <style>{`
-        .section-grid {
-          grid-template-columns: minmax(0, 32rem) minmax(0, 1fr);
-          gap: 3rem;
+        .section-content {
+          width: min(52rem, 54vw);
         }
         @media (max-width: 1024px) {
-          .section-grid {
-            grid-template-columns: 1fr;
-          }
-        }
-        @media (max-width: 1024px) {
-          .section-grid > div:first-child {
-            position: static !important;
-            max-height: none !important;
+          .section-content {
+            width: 100%;
           }
         }
       `}</style>
